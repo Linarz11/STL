@@ -1,6 +1,7 @@
-#include <iostream>
+п»ї#include <iostream>
 #include<array>
 #include<vector>
+#include <list>
 //using namespace std;
 
 using std::cin;
@@ -10,14 +11,15 @@ using std::endl;
 
 #define tab "\t"
 //#define STL_ARRAY
-#define  STL_VACTOR
+//#define  STL_VACTOR
 //#define EXCEPTIONS_IN_VECTOR
+#define STL_LIST
 
 
 template<typename T> void vector_properties(const std::vector<T>& vec)
 {
 	cout << "Size: " << vec.size() << endl;
-	cout << "Capacity: " << vec.capacity() << endl; //Вметительность - сколько элементов может вместить в себя вектор без переопределения памяти. 
+	cout << "Capacity: " << vec.capacity() << endl; //Р’РјРµС‚РёС‚РµР»СЊРЅРѕСЃС‚СЊ - СЃРєРѕР»СЊРєРѕ СЌР»РµРјРµРЅС‚РѕРІ РјРѕР¶РµС‚ РІРјРµСЃС‚РёС‚СЊ РІ СЃРµР±СЏ РІРµРєС‚РѕСЂ Р±РµР· РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё. 
 	cout << "MaxSize: " << vec.max_size() << endl;
 }
 
@@ -32,7 +34,7 @@ template <typename T> void vector_print(const std::vector<T>& vec)
 
 template <typename T> void vector_reverse_print(const std::vector<T>& vec)
 {
-	for (typename std::vector<T>::const_iterator it = vec.end(); it != vec.begin(); --it)
+	for (typename std::vector<T>::const_reverse_iterator it = vec.crbegin(); it != vec.crend(); it++)
 	{
 		cout << *it << tab;
 	}
@@ -40,11 +42,20 @@ template <typename T> void vector_reverse_print(const std::vector<T>& vec)
 }
 
 
+template<typename T> void list_print(const std::list<T>& list)
+{
+	for (std::list<int>::const_iterator it = list.begin(); it != list.end(); it++)
+	{
+		cout << *it << tab;
+	}
+}
+
+
 void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef STL_ARRAY
-	//array - контейнер, который хранит данные в виде статистического массива.
+	//array - РєРѕРЅС‚РµР№РЅРµСЂ, РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РґР°РЅРЅС‹Рµ РІ РІРёРґРµ СЃС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°.
 
 	const int n = 5;
 	std::array<int, n >arr = { 3,5,8,13,21 };
@@ -58,7 +69,7 @@ void main()
 
 #ifdef STL_VACTOR
 
-	//vector - это контейнер, который хранит данные в виде динамического массива
+	//vector - СЌС‚Рѕ РєРѕРЅС‚РµР№РЅРµСЂ, РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РґР°РЅРЅС‹Рµ РІ РІРёРґРµ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°
 	std::vector<int> vec = { 0, 1, 1,2,3, 5, 8, 13, 21, 34 };
 	
 	vector_properties(vec);
@@ -71,8 +82,8 @@ void main()
 		{
 
 			//[] - index operator (subscript operator)
-			//cout << vec[i] << tab; 		 //Оператор [] НЕ бросает исключение при выходе за пределы вектора
-			cout << vec.at(i) << tab; 	//Метод at() бросает исключение (out of range exception) при выходе за пределы вектора
+			//cout << vec[i] << tab; 		 //РћРїРµСЂР°С‚РѕСЂ [] РќР• Р±СЂРѕСЃР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ РїСЂРё РІС‹С…РѕРґРµ Р·Р° РїСЂРµРґРµР»С‹ РІРµРєС‚РѕСЂР°
+			cout << vec.at(i) << tab; 	//РњРµС‚РѕРґ at() Р±СЂРѕСЃР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ (out of range exception) РїСЂРё РІС‹С…РѕРґРµ Р·Р° РїСЂРµРґРµР»С‹ РІРµРєС‚РѕСЂР°
 		}
 		cout << endl;
 		//throw 123;
@@ -88,11 +99,65 @@ void main()
 	}
 #endif // EXCEPTIONS_IN_VECTOR
 
+	int index;
+	int value;
+	cout << " Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> index;
+	cout << " Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> value;
+
+	std::vector<int>::iterator position = vec.begin() + index;
+	vec.insert(position, value);
+
 
 	vector_print(vec);
 	vector_reverse_print(vec);
 
+
+	cout << " Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ СѓРґР°Р»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> index;
+	vec.erase(vec.begin() + index);
+	vector_print(vec);
+
+	vector_properties(vec);
+	vec.assign({ 1024, 2048, 3072 });
+	vector_properties(vec);
+	vector_print(vec);
+	vec.shrink_to_fit();
+	vector_properties(vec);
+
 #endif // STL_VACTOR
 
+#ifdef STL_LIST
+	std::list<int> list = { 3, 5, 8, 13, 21 };
+	/*for (int i = 0; i < list.size(); i++)
+	{
+		cout << list[i] << tab;  //РћРїРµСЂС‚Р°РѕСЂ [] РЅРµРґРѕРїСѓСЃС‚РёРј РІ СЃРїРёСЃРєР°С…, РїРѕСЃРєРѕР»СЊРєСѓ РѕРЅ РѕС‡РµРЅСЊ СЃРёР»СЊРЅРѕ СЃРЅРёР¶Р°РµС‚ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊРЅРѕСЃС‚СЊ
+	}
+	cout << endl;*/
+
+	for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
+	{
+		cout << *it << tab;
+	}
+	/*cout << endl;
+	std::vector<int> vec{ 3,5,8,13,21 };
+	cout << "VectorSize: " << vec.size() << endl;
+	cout << "VectorMaxSize: " << vec.max_size() << endl;
+	cout << endl;
+	cout << "ListSize: " << list.size() << endl;
+	cout << "ListMaxSize: " << list.max_size() << endl;*/
+
+	int index;
+	int value;
+	cout << endl;
+	cout << " Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> index;
+	cout << " Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> value;
+	
+	std::list<int>:: iterator position = list.begin();
+	for (int i = 0; i < index; i++)position++;
+	list.insert(position, value);
+	list_print(list);
+
+
+
+#endif // STL_LIST
 
 }
