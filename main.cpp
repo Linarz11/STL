@@ -30,6 +30,15 @@ template <typename T> void vector_print(const std::vector<T>& vec)
 	cout << endl;
 }
 
+template <typename T> void vector_reverse_print(const std::vector<T>& vec)
+{
+	for (typename std::vector<T>::const_iterator it = vec.end(); it != vec.begin(); --it)
+	{
+		cout << *it << tab;
+	}
+	cout << endl;
+}
+
 
 void main()
 {
@@ -81,6 +90,7 @@ void main()
 
 
 	vector_print(vec);
+	vector_reverse_print(vec);
 
 #endif // STL_VACTOR
 
